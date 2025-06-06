@@ -23,8 +23,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '23'
           cache: 'npm'
+          cache-dependency-path: package-lock.json
       
       - name: Install dependencies
         run: npm ci
@@ -36,8 +37,14 @@ jobs:
       
       - name: Test build output
         run: |
-          if [ ! -d "dist/client" ]; then
-            echo "Build output directory 'dist/client' not found!"
+          if [ ! -d "dist/client/browser" ]; then
+            echo "Build output directory 'dist/client/browser' not found!"
+            exit 1
+          fi
+      - name: Test if index.html exists
+        run: |
+          if [ ! -f "dist/client/browser/index.html" ]; then
+            echo "Build output index.html 'dist/client/browser/index.html' not found!"
             exit 1
           fi
       
@@ -50,7 +57,7 @@ jobs:
           action: "upload"
           app_location: "src/" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: "dist/client/browser" # Built app content directory
+          output_location: "dist/client/" # Built app content directory
           skip_app_build: true # Skip the build step since we already built the app
           app_build_command: "npm run build -- --configuration production"
           api_build_command: ""
