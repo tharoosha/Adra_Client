@@ -21,7 +21,6 @@
     </table>
   </div>
 
-  <!-- 2) “Add User” form (Admin only) -->
   <div *ngIf="isAdmin" class="card mt-5 p-3 border-primary">
     <h5>Add New User</h5>
     <form [formGroup]="newUserForm" (ngSubmit)="onAddUser()">

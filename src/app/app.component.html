@@ -1,4 +1,12 @@
-<!-- src/app/app.component.html -->
-<h1>{{ title }}</h1>
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+
+<div *ngIf="currentRoute === '/login'; else normalLayout" class="login‐wrapper">
+  <h1 class="title">Adra Balance Viewer Portal</h1>
+  <router-outlet></router-outlet>
+</div>
+
+<ng-template #normalLayout>
+  <h1 class="title" *ngIf="currentRoute !== '/view' && currentRoute !== '/upload'">Adra Balance Viewer Portal</h1>
+  <app-navbar *ngIf="showNavbar"></app-navbar>
+  <router-outlet></router-outlet>
+</ng-template>
+  

@@ -11,7 +11,6 @@ import { AccountBalanceUploadResult } from '../models/account-balance-upload-res
   providedIn: 'root',
 })
 export class BalanceService {
-  // Base API URL (e.g. http://localhost:5000)
   private apiBase = environment.apiUrl;
 
   constructor(private http: HttpClient) {}

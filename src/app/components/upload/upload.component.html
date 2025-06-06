@@ -1,6 +1,7 @@
 <!-- src/app/components/upload/upload.component.html -->
-<div class="container mt-4" style="max-width: 600px;">
-    <h2>Upload Account Balances (Admin Only)</h2>
+<div style="min-height: 80vh; display: flex; justify-content: center; align-items: center;">
+  <div class="container mt-4" style="max-width: 600px;">
+    <h2>Upload Account Balances</h2>
   
     <div *ngIf="errorMessage" class="alert alert-danger">
       {{ errorMessage }}
@@ -28,4 +29,5 @@
       {{ isSubmitting ? 'Uploading…' : 'Upload' }}
     </button>
   </div>
+</div>
   

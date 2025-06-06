@@ -31,13 +31,13 @@ describe('AppComponent', () => {
   it(`should have as title 'client'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('AdraBalanceViewer');
+    expect(app.title).toEqual('Adra Balance Viewer Portal');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled: HTMLElement = fixture.nativeElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('AdraBalanceViewer');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Adra Balance Viewer Portal');
   });
 });

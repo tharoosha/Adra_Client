@@ -46,7 +46,6 @@ describe('AuthService', () => {
     // Call login('user', 'pass')
     service.login('user@domain.com', 'SecurePass!').subscribe({
       next: (res) => {
-        // Expect the flushed token
         expect(res.token).toBe('fake-jwt-token');
 
         // Token should be stored under 'adra_jwt_token'

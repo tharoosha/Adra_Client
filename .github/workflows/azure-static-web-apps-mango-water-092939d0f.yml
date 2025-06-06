@@ -34,7 +34,13 @@ jobs:
         run: npm run build -- --configuration production
         env:
           NODE_ENV: production
-      
+
+      - name: Run unit tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Run end-to-end tests
+        run: npx ng e2e --headless
+
       - name: Test build output
         run: |
           if [ ! -d "dist/client/browser" ]; then

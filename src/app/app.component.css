@@ -1,0 +1,29 @@
+/* src/app/app.component.css */
+
+/* Common title styling (you can tweak colors/font‐size/etc.) */
+.title {
+    margin: 0;
+    color: #1976d2;
+    font-weight: bold;
+    text-align: center;
+    font-size: 2rem; /* adjust as needed */
+  }
+  
+  /* This wrapper is only used on the /login route */
+  .login‐wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* vertical centering */
+    align-items: center;     /* horizontal centering */
+    height: 100vh;           /* fill the viewport */
+    padding: 1rem;           /* optional: give a little breathing room */
+    box-sizing: border-box;
+  }
+  
+  
+  .login‐form {
+    width: 100%;
+    max-width: 400px; /* or whatever fits your form */
+    margin-top: 2rem; /* space between title and form */
+  }
+  
