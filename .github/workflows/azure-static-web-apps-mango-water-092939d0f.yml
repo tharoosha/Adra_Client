@@ -54,7 +54,7 @@ jobs:
           skip_app_build: true # Skip the build step since we already built the app
           app_build_command: "npm run build -- --configuration production"
           api_build_command: ""
-          app_artifact_location: "dist/client"
+          app_artifact_location: "dist/client/browser"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           ###### End of Repository/Build Configurations ######
