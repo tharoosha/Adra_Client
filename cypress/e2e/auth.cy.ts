@@ -11,21 +11,11 @@ describe('Authentication', () => {
   });
 
   it('should show validation errors for empty fields', () => {
-    // cy.get('input[formControlName="name"]').type('');
-    // cy.get('input[formControlName="password"]').type('');
-    // cy.get('button[type="submit"]').click();
     cy.get('input[formControlName="name"]').focus().blur();
     cy.get('.invalid-feedback').should('contain.text', 'Valid Username is required.');
     cy.get('input[formControlName="password"]').focus().blur();
     cy.get('.invalid-feedback').should('contain.text', 'Password is required.');
   });
-
-  // it('should show validation error for short username', () => {
-  //   cy.get('input[formControlName="username"]').type('ab');
-  //   cy.get('input[formControlName="password"]').type('password123');
-  //   cy.get('button[type="submit"]').click();
-  //   cy.get('.error-message').should('contain', 'Username must be at least 3 characters');
-  // });
 
   it('should show validation error for short password', () => {
     cy.get('input[formControlName="name"]').type('user01');
@@ -33,7 +23,6 @@ describe('Authentication', () => {
 
     cy.get('input[formControlName="password"]').blur();
 
-    // cy.get('button[type="submit"]').click();
     cy.get('.error-message').should('contain', 'Password must be at least 6 characters');
   });
 
@@ -49,9 +38,6 @@ describe('Authentication', () => {
     cy.get('input[formControlName="name"]').type('User01');
     cy.get('input[formControlName="password"]').type('User01@123');
     cy.get('button[type="submit"]').should('not.be.disabled').click();
-    cy.get('button[type="submit"]').should('not.be.disabled').click();
-
-    // cy.get('button[type="submit"]').click();
 
     cy.wait('@loginRequest');
     cy.url().should('include', '/view');

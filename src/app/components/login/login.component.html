@@ -1,12 +1,12 @@
 <div class="container mt-5" style="max-width: 400px;">
   <h3 class="text-center">Sign In</h3>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <!-- ======================== NAME / USERNAME FIELD ======================== -->
+
     <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
+      <label for="username" class="form-label">Username</label>
       <input
         type="text"
-        id="name"
+        id="username"
         class="form-control"
         formControlName="name"
         [class.is-invalid]="
@@ -24,7 +24,6 @@
       </div>
     </div>
 
-    <!-- ======================== PASSWORD FIELD ======================== -->
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
       <input
@@ -37,8 +36,6 @@
           loginForm.get('password')?.touched
         "
       />
-
-      <!-- Required‐field error -->
       <div
         class="invalid-feedback"
         *ngIf="
@@ -48,8 +45,6 @@
       >
         Password is required.
       </div>
-
-      <!-- minlength(6) error wrapped in .error-message -->
       <div
         class="invalid-feedback"
         *ngIf="
@@ -60,17 +55,6 @@
         <div class="error-message">
           Password must be at least 6 characters
         </div>
-      </div>
-
-      <!-- NEW: “Long enough” success message -->
-      <div
-        class="form-text text-success"
-        *ngIf="
-          loginForm.get('password')?.value?.length >= 6 &&
-          loginForm.get('password')?.touched
-        "
-      >
-        👍 Password is long enough
       </div>
     </div>
 

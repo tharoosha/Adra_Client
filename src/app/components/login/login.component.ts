@@ -27,7 +27,7 @@ export class LoginComponent {
 
   async onSubmit() {
     console.log(
-      '⚡️ onSubmit() was called, form is valid? →',
+      'onSubmit() was called, form is valid? →',
       this.loginForm.valid
     );
 
@@ -35,7 +35,7 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return;
     }
-    console.log('✅ Form valid, calling AuthService.login(...)');
+    console.log('Form valid, calling AuthService.login(...)');
 
     this.isSubmitting = true;
     this.errorMessage = '';
@@ -44,12 +44,12 @@ export class LoginComponent {
     this.auth.login(name, password).subscribe({
       next: () => {
         // After login, navigate to “view” page
-        console.log('🔐 login succeeded, navigating to /view');
+        console.log('login succeeded, navigating to /view');
 
         this.router.navigate(['/view']);
       },
       error: (err) => {
-        console.error('❌ login failed:', err);
+        console.error('login failed:', err);
 
         console.error(err);
         this.errorMessage = 'Login failed. Check credentials.';

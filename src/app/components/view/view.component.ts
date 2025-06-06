@@ -18,13 +18,11 @@ interface DisplayRow {
   styleUrls: ['./view.component.css']
 })
 export class ViewComponent implements OnInit {
-  // Balance display state
   loading = true;
   error = '';
   asOfMonthYear = '';
   displayRows: DisplayRow[] = [];
 
-  // “Add User” form
   newUserForm!: FormGroup;
   userFormError = '';
   userFormSuccess = '';
@@ -37,17 +35,14 @@ export class ViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1) Check admin state
     this.isAdmin = this.authSvc.isAdmin();
 
-    // 2) Initialize the “Add User” form
     this.newUserForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       role: ['User', Validators.required] // default to “User”
     });
 
-    // 3) Fetch balances
     this.balanceSvc.getLatest().subscribe({
       next: (dto: AccountBalanceResponse) => {
         if (!dto) {
@@ -93,7 +88,6 @@ export class ViewComponent implements OnInit {
     });
   }
 
-  /** Submit a new user (Admin only) */
   onAddUser(): void {
     this.userFormError = '';
     this.userFormSuccess = '';
@@ -116,7 +110,6 @@ export class ViewComponent implements OnInit {
     });
   }
 
-  /** Format number as “Rs x,xxx.00/=” */
   private formatCurrency(val: number): string {
     const formattedNumber = new Intl.NumberFormat('en-IN', {
       minimumFractionDigits: 2,

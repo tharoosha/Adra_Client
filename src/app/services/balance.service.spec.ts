@@ -85,7 +85,6 @@ describe('BalanceService', () => {
       const req = httpMock.expectOne(UPLOAD_URL);
       expect(req.request.method).toBe('POST');
 
-      // Body should be FormData containing our file under key "file"
       const formData: FormData = req.request.body as FormData;
       expect(formData.has('file')).toBeTrue();
 
