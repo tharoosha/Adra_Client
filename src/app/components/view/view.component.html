@@ -1,0 +1,80 @@
+<div class="container mt-4">
+  <!-- 1) Existing balances -->
+  <div *ngIf="loading" class="alert alert-info">Loading balances…</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div *ngIf="!loading && !error">
+    <h4>Balances as of {{ asOfMonthYear }}</h4>
+    <table class="table table-bordered text-center mt-3">
+      <tbody>
+        <tr>
+          <td *ngFor="let row of displayRows">
+            <span class="account-name">{{ row.accountName }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td *ngFor="let row of displayRows">
+            <span class="balance-value">{{ row.formattedBalance }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 2) “Add User” form (Admin only) -->
+  <div *ngIf="isAdmin" class="card mt-5 p-3 border-primary">
+    <h5>Add New User</h5>
+    <form [formGroup]="newUserForm" (ngSubmit)="onAddUser()">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          class="form-control"
+          [class.is-invalid]="newUserForm.get('username')?.invalid && newUserForm.get('username')?.touched"
+        />
+        <div class="invalid-feedback">
+          Username is required.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="newUserForm.get('password')?.invalid && newUserForm.get('password')?.touched"
+        />
+        <div class="invalid-feedback">
+          Password is required (min 6 characters).
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="role" class="form-label">Role</label>
+        <select
+          id="role"
+          formControlName="role"
+          class="form-select"
+        >
+          <option value="User">User</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+
+      <div *ngIf="userFormError" class="alert alert-danger">
+        {{ userFormError }}
+      </div>
+      <div *ngIf="userFormSuccess" class="alert alert-success">
+        {{ userFormSuccess }}
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="newUserForm.invalid">
+        Add User
+      </button>
+    </form>
+  </div>
+</div>

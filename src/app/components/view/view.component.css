@@ -1,0 +1,22 @@
+
+.account-name {
+  font-weight: 600;
+  text-decoration: underline;
+  display: block;
+}
+
+.balance-value {
+  font-size: 1.2rem;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+table.table td {
+  vertical-align: middle;
+  padding: 1.25rem;
+}
+
+.card {
+  max-width: 500px;
+  margin-top: 2rem;
+}

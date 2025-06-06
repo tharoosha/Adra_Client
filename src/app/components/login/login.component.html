@@ -1,0 +1,92 @@
+<div class="container mt-5" style="max-width: 400px;">
+  <h3 class="text-center">Sign In</h3>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!-- ======================== NAME / USERNAME FIELD ======================== -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        formControlName="name"
+        [class.is-invalid]="
+          loginForm.get('name')?.invalid && loginForm.get('name')?.touched
+        "
+      />
+      <div
+        class="invalid-feedback"
+        *ngIf="
+          loginForm.get('name')?.hasError('required') &&
+          loginForm.get('name')?.touched
+        "
+      >
+        Valid Username is required.
+      </div>
+    </div>
+
+    <!-- ======================== PASSWORD FIELD ======================== -->
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        formControlName="password"
+        [class.is-invalid]="
+          loginForm.get('password')?.invalid &&
+          loginForm.get('password')?.touched
+        "
+      />
+
+      <!-- Required‐field error -->
+      <div
+        class="invalid-feedback"
+        *ngIf="
+          loginForm.get('password')?.hasError('required') &&
+          loginForm.get('password')?.touched
+        "
+      >
+        Password is required.
+      </div>
+
+      <!-- minlength(6) error wrapped in .error-message -->
+      <div
+        class="invalid-feedback"
+        *ngIf="
+          loginForm.get('password')?.hasError('minlength') &&
+          loginForm.get('password')?.touched
+        "
+      >
+        <div class="error-message">
+          Password must be at least 6 characters
+        </div>
+      </div>
+
+      <!-- NEW: “Long enough” success message -->
+      <div
+        class="form-text text-success"
+        *ngIf="
+          loginForm.get('password')?.value?.length >= 6 &&
+          loginForm.get('password')?.touched
+        "
+      >
+        👍 Password is long enough
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary w-100"
+      [disabled]="isSubmitting || loginForm.invalid"
+    >
+      {{ isSubmitting ? 'Signing in…' : 'Sign In' }}
+    </button>
+
+    <div
+      class="alert alert-danger mt-3"
+      *ngIf="errorMessage.length > 0"
+    >
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>
