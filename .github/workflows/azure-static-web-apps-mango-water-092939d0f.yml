@@ -39,7 +39,7 @@ jobs:
         run: npm test -- --watch=false --browsers=ChromeHeadless
 
       - name: Run end-to-end tests
-        run: npx ng e2e --configuration=production --watch=false --headles
+        run: npx ng e2e --configuration=production --watch=false --headless
 
       - name: Test build output
         run: |
