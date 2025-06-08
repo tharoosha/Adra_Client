@@ -37,7 +37,7 @@ describe('Balance Management', () => {
       cy.intercept('POST', '**/auth/login', (req) => {
         // Expecting the body to have { username: 'admin01', password: 'Admin@123' }
         expect(req.body).to.deep.equal({
-          username: 'admin01',
+          username: 'admin',
           password: 'Admin@123',
         });
         req.reply({
@@ -50,7 +50,7 @@ describe('Balance Management', () => {
       }).as('adminLogin');
 
       // Fill in “Name” + “Password” and click Sign In
-      cy.get('input[formControlName="name"]').type('admin01');
+      cy.get('input[formControlName="name"]').type('admin');
       cy.get('input[formControlName="password"]').type('Admin@123');
       cy.get('button[type="submit"]').should('not.be.disabled').click();
 
