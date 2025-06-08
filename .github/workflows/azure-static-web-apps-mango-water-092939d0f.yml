@@ -8,73 +8,48 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+  build_and_deploy_and_close:
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
-          lfs: false
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'
+          node-version: '20'
           cache: 'npm'
-          cache-dependency-path: package-lock.json
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build Angular app
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
         run: npm run build -- --configuration production
-        env:
-          NODE_ENV: production
 
       - name: Run unit tests
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
         run: npm test -- --watch=false --browsers=ChromeHeadless
 
-      - name: Run end-to-end tests
+      - name: Run E2E tests
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
         run: npx ng e2e --configuration=production --watch=false --headless
 
-      - name: Test build output
-        run: |
-          if [ ! -d "dist/client/browser" ]; then
-            echo "Build output directory 'dist/client/browser' not found!"
-            exit 1
-          fi
-      - name: Test if index.html exists
-        run: |
-          if [ ! -f "dist/client/browser/index.html" ]; then
-            echo "Build output index.html 'dist/client/browser/index.html' not found!"
-            exit 1
-          fi
-      
-      - name: Build And Deploy
-        id: builddeploy
+      - name: Deploy to Azure Static Web Apps
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_MANGO_WATER_092939D0F }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "dist/client/browser/" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "dist/client/" # Built app content directory
-          skip_app_build: true # Skip the build step since we already built the app
-          app_build_command: "npm run build -- --configuration production"
-          api_build_command: ""
-          app_artifact_location: "dist/client/"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          ###### End of Repository/Build Configurations ######
-      - name: Close Pull Request
+          action: upload
+          app_location: "dist/client/browser"
+          skip_app_build: true
+
+      - name: Close Azure Static Web App preview
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
-        id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_MANGO_WATER_092939D0F }}
-          action: "close"
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: close
